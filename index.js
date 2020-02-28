@@ -9,13 +9,6 @@ const vm = require('vm')
 
 app.use(static(__dirname + '/public'))
 
-const templateMap = {
-  index: '`' + fs.readFileSync('./public/index.htm').toString() + '`',
-  header: '`' + fs.readFileSync('./public/header.htm').toString() + '`',
-  content: '`' + fs.readFileSync('./public/content.htm').toString() + '`',
-  footer: '`' + fs.readFileSync('./public/footer.htm').toString() + '`'
-}
-
 const templateCache = {};
 
 const templateContext = vm.createContext({

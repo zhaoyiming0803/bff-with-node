@@ -28,10 +28,10 @@ const templateContext = vm.createContext({
 function createTemplate (templatePath) {
   templateCache[ templatePath ] = vm.runInContext(
     `(function (data) {
-          with (data) {
-              return \`${fs.readFileSync(templatePath, 'utf-8') }\`
-          }
-      })`,
+        with (data) {
+          return \`${fs.readFileSync(templatePath, 'utf-8') }\`
+        }
+    })`,
     templateContext
   );
 

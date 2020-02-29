@@ -22,7 +22,7 @@ function createTemplate (templatePath) {
   templateCache[ templatePath ] = vm.runInContext(
     `(function (data) {
         with (data) {
-          return \`${fs.readFileSync(templatePath, 'utf-8') }\`
+          return \`${fs.readFileSync(templatePath)}\`
         }
     })`,
     templateContext
@@ -32,8 +32,19 @@ function createTemplate (templatePath) {
 }
 
 
+// router.get('/index.html', async (ctx, next) => {
+//   ctx.body = createTemplate('./public/index.htm')({ users })
+// })
+
+// 在 HTTP 请求期间：
+// 减少不必要的计算
+// 空间换时间
+// 提前计算
+const indexBuffer = createTemplate('./public/index.htm')({ users })
 router.get('/index.html', async (ctx, next) => {
-  ctx.body = createTemplate('./public/index.htm')({ users })
+  ctx.status = 200
+  ctx.type = 'html'
+  ctx.body = indexBuffer
 })
 
 app.use(router.routes(), router.allowedMethods)
